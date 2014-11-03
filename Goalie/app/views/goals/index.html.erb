@@ -1,0 +1,16 @@
+<h1><%= current_user.username if signed_in? %></h1>
+<% @goals.each do |goal| %>
+  <% if current_user && goal.user_id == current_user.id %>
+    <%= goal.completed ? "[x]" : "[ ]" %>
+    <%= goal.statement %>
+    <%= button_to "Complete Goal",
+    "/goal_complete/#{goal.id}",
+    method: :patch %>
+  <% else %>
+    <%= goal.completed ? "[x]" : "[ ]" %>
+    <%= goal.statement unless goal.private_goal %>
+    <%= button_to "Complete Goal",
+    "/goal_complete/#{goal.id}",
+    method: :patch unless goal.completed %>
+  <% end %>
+<% end %>
