@@ -1,0 +1,26 @@
+<% if signed_in? %>
+  <%= @user.username%>
+   <% @user.goals.each do |goal| %>
+    <%= goal.statement %>
+  <% end %>
+  <% @user.comments.each do |comment| %>
+   <%= comment.body %>
+   <% end %>
+<% end %>
+
+
+ <form action="<%= comments_url %>" method="post">
+   <input type="hidden"
+   name="authenticity_token"
+   value="<%= form_authenticity_token %>">
+
+   <label>
+     Body
+     <input type="text" name="comment[body]">
+   </label>
+
+
+  <input type="hidden" name="comment[commentable_type]" value="User">
+  <input type="hidden" name="comment[commentable_id]" value="<%= @user.id %>">
+  <input type="submit" value="Create Comment">
+ </form>

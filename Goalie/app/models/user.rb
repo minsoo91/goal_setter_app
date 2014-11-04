@@ -18,6 +18,7 @@ class User < ActiveRecord::Base
   after_initialize :ensure_session_token
 
   has_many :goals
+  has_many :comments, as: :commentable
 
   def self.generate_session_token
     SecureRandom.urlsafe_base64(16)
