@@ -18,7 +18,17 @@ feature "create goal" do
     make_valid_public_goal
     click_button("Sign Out")
     visit(goals_url)
-    save_and_open_page
     expect(page).to have_content("Stop buying useless shit.")
+  end
+end
+
+feature "displays goal" do
+  it "displays already created goal on the show page" do
+    valid_sign_up
+    visit(new_goal_url)
+    fill_in("Statement", with: "Start buying useful shit")
+    click_button("Make Goal")
+    visit(goal_url(1))
+    expect(page).to have_content("Start buying useful shit")
   end
 end
